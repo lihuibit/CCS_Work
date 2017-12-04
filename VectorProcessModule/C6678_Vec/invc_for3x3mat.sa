@@ -1,0 +1,360 @@
+					.global Mat_invc_cplx
+
+Mat_invc_cplx:		.cproc	pInPut,n,is,js,frow,fcol
+				.no_mdep
+				.reg u,v,re,d1_r,d1_m,d1,d2,uu,vv
+                .reg cp1_r,cp1_m,cp2_r,cp2_m,cp3_r,cp3_m,cp4_r,cp4_m,cp5_m,cp5_r
+                .reg cp6_r,cp6_m,cp7_r,cp7_m,cp8_r,cp8_m
+                .reg p1,p2,p3,p4,head1,head2,head4,head3,head5,tmp1,tmp2,ii,jj
+                .reg n1,n2,n3,nn,n4,n5,n6,n7,n8,na,nna
+                .reg  r,z,q,p,aa,pn,qn,rr,r1,r2,r11,r12,mm,q1,rret
+                 zero d2
+                 zero n1
+                 mvk  0x4,aa
+                 mvk  0x2,rr
+                 intdp rr,r12:r11
+                 add n,n,nn
+                 sub n,1,na
+                 add na,na,nna
+                 ;mpy n,2,nn
+                 ;mv n,n1
+                 mv    pInPut,q
+
+oloop            mv    d2,d1
+                 add   n1,d2,n2
+Iloop            add   n1,n1,n3
+                 MPY   nn,n2,u
+loop2:
+                 add   u,n3,v
+                 mpy   aa,v,head1
+                 add   q,head1,p
+                 lddw  *p++,cp1_m:cp1_r
+                 dmpysp cp1_m:cp1_r,cp1_m:cp1_r,cp2_m:cp2_r
+                 addsp   cp2_m,cp2_r,p1
+                 CMPGTSP p1,d1,r
+            [r]  mv p1,d1
+            [r]  stw n3,*js[n1]
+            [r]  stw n2,*is[n1]
+                 ;add   n3,2,n3
+                 sub   nna,n3,n4
+                 CMPGT d2,n4,mm
+            [mm] sub   n4,n4,n4
+            [n4] add   n3,2,n3
+			[n4]  b	   loop2
+                 sub   na,n2,n5
+            [n5] add   n2,1,n2
+			[n5]  b	   Iloop
+
+            CMPEQSP  d1,d2,z
+            [z]  B   ENDFUNCTION
+
+			ldw   *is[n1],ii
+			mpy    ii,nn,head2
+			CMPEQ  ii,n1,n3
+			[n3]  B   for1
+			mpy    n1,nn,head1
+			zero n4
+
+loop3
+                add   head1,n4,uu
+                mpy   aa,uu,head3
+                add   q,head3,qn
+                lddw  *qn,p2:p1
+                add   head2,n4,vv
+                mpy   aa,vv,head4
+                add   q,head4,p
+                lddw  *p,p4:p3
+                stdw  p2:p1,*p
+                stdw  p4:p3,*qn
+
+                sub   nna,n4,n2
+           [n2] add   n4,2,n4
+           ;[n3] zero  n2
+		   [n2]  b	   loop3
+for1:
+	        zero n4
+	        mpy n1,2,n5
+	        ldw   *js[n1],jj
+            CMPEQ jj,n5,n3
+            [n3]  B   for2
+loop4
+                mpy   n4,nn,head1
+                add   head1,n5,u
+                add   head1,jj,v
+                mpy   aa,u,head2
+                add   q,head2,qn
+                lddw  *qn,p2:p1
+                mpy   aa,v,head3
+                add   q,head3,p
+                lddw  *p,p4:p3
+                stdw  p2:p1,*p
+                stdw  p4:p3,*qn
+
+                sub   na,n4,n2
+
+           [n2] add   n4,1,n4
+           ;[n3] zero  n2
+		   [n2]  b	   loop4
+
+for2:
+                mpy   n1,nn,head1
+                add   head1,n5,u
+                mpy   aa,u,head2
+                add   q,head2,q1
+                lddw  *q1,p4:p3
+                spdp  p3,cp2_m:cp2_r;r0
+                spdp  p3,r2:r1;r7
+                spdp   d1,d1_m:d1_r;r12
+                RCPdP  d1_m:d1_r, cp2_m:cp2_r   ;除法实现上有误差需要提高精度
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+                fmpydp  r2:r1,cp2_m:cp2_r,cp1_m:cp1_r
+                dpsp  cp1_m:cp1_r,cp3_r
+
+
+                spdp  p4,cp2_m:cp2_r
+
+                spdp  p4,r2:r1;r7
+                spdp   d1,d1_m:d1_r;r12
+                RCPdP  d1_m:d1_r, cp2_m:cp2_r   ;除法实现上有误差需要提高精度
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+
+                fmpydp  cp2_m:cp2_r, d1_m:d1_r,d1_m:d1_r
+                fmpydp  r2:r1,cp2_m:cp2_r,r2:r1
+                fsubdp  r12:r11,d1_m:d1_r,cp2_m:cp2_r
+                fmpydp  r2:r1,cp2_m:cp2_r,cp1_m:cp1_r
+                dpsp  cp1_m:cp1_r,cp3_m
+
+                fsubsp d2,cp3_m,cp3_m
+                stdw  cp3_m:cp3_r,*q1
+
+               zero n4
+               mpy   n1,nn,head1
+loop5:
+                ;CMPEQ n4,n5,n3
+                ;[n3]  B   for3
+                add   head1,n4,u
+                mpy   aa,u,head2
+                add   q,head2,qn
+                lddw  *qn,cp2_m:cp2_r
+                cmpysp	cp2_m:cp2_r,cp3_m:cp3_r,p4:p3:p2:p1
+				daddsp	p4:p3,p2:p1,cp1_m:cp1_r
+				fsubsp	d2,cp1_m,tmp1
+				mv      cp1_r,tmp2
+				stdw  tmp2:tmp1,*qn
+
+                sub   nna,n4,n2
+                ;CMPGT d2,n2,mm
+          ; [mm] sub   n2,n2,n2
+           [n2] add   n4,2,n4
+		   [n2]  b	   loop5
+
+               stdw  cp3_m:cp3_r,*q1
+
+	            mv    n,n4
+                mpy   n1,nn,head1
+                mpy   aa,head1,head2
+                add   q,head2,pn
+                mv    frow,qn
+
+loopl:          lddw  *pn++,cp2_m:cp2_r
+                stdw  cp2_m:cp2_r,*qn++
+
+                sub   n4,1,n4
+		    [n4]  b	   loopl
+
+
+	            mv    n,n4
+	            mpy   aa,n5,head1
+                add   q,head1,pn
+                mpy   aa,nn,head2
+                mv    fcol,qn
+
+loopm:          lddw  *pn,cp2_m:cp2_r
+                stdw  cp2_m:cp2_r,*qn++
+                add   pn,head2,pn
+                sub   n4,1,n4
+		    [n4]  b	   loopm
+
+
+
+                 zero n4
+	            mpy   n1,nn,head1
+	            mv    fcol,p
+loop6:          ;CMPEQ n4,n1,n3
+               ;[n3]  B   for4
+                mpy   n4,nn,head2
+                ;add   head2,n5,v
+               ; mpy   aa,v,head5
+              ;  add   q,head5,p
+               lddw  *p++,cp2_m:cp2_r
+               mv    frow,qn
+                zero n2
+loop7:
+                ;CMPEQ n2,n5,n3
+               ; [n3]  B   for5
+               ; add   head1,n2,uu
+               ; mpy   aa,uu,head4
+               ; add   q,head4,qn
+               ; lddw  *qn,cp2_m:cp2_r
+                lddw  *qn++,cp1_m:cp1_r
+                add   head2,n2,re
+                mpy   aa,re,head5
+                add   q,head5,pn
+                lddw  *pn,cp4_m:cp4_r
+                cmpysp	cp2_m:cp2_r,cp1_m:cp1_r,p4:p3:p2:p1
+				daddsp	p4:p3,p2:p1,cp5_m:cp5_r
+				fsubsp	d2,cp5_m,tmp1
+				mv      cp5_r,tmp2
+				dsubsp   cp4_m:cp4_r,tmp2:tmp1,cp4_m:cp4_r
+				stdw    cp4_m:cp4_r,*pn
+           sub   nna,n2,n6
+           [n6] add   n2,2,n2
+		   [n6]  b	   loop7
+
+	        sub   na,n4,n7
+           [n7] add   n4,1,n4
+		   [n7]  b	   loop6
+
+
+	            mv    n,n4
+                mpy   n1,nn,head1
+                mpy   aa,head1,head2
+                add   q,head2,pn
+                mv    frow,qn
+
+loopk:          lddw  *qn++,cp2_m:cp2_r
+                stdw  cp2_m:cp2_r,*pn++
+
+                sub   n4,1,n4
+		    [n4]  b	   loopk
+
+
+	            mv    n,n4
+	            mpy   aa,n5,head1
+                add   q,head1,pn
+                mpy   aa,nn,head2
+                mv    fcol,qn
+
+loopb:          lddw  *qn++,cp2_m:cp2_r
+                stdw  cp2_m:cp2_r,*pn
+                add   pn,head2,pn
+                sub   n4,1,n4
+		    [n4]  b	   loopb
+
+
+
+
+	            zero n4
+loop8:
+               ; CMPEQ n4,n1,n3
+              ;  [n3]  B   for6
+                add   head1,n2,uu
+                mpy   aa,uu,head4
+                add   q,head4,qn
+                lddw  *qn,cp2_m:cp2_r
+
+                mpy   n4,nn,head2
+                add   head2,n5,u
+                mpy   aa,u,head4
+                add   q,head4,qn
+                lddw  *qn,cp2_m:cp2_r
+                cmpysp	cp2_m:cp2_r,cp3_m:cp3_r,p4:p3:p2:p1
+				daddsp	p4:p3,p2:p1,cp1_m:cp1_r
+				fsubsp	d2,cp1_r,tmp2
+				mv      cp1_m,tmp1
+				stdw	tmp2:tmp1,*qn
+
+
+            sub   na,n4,n2
+           [n2] add   n4,1,n4
+		   [n2]  b	   loop8
+
+           stdw  cp3_m:cp3_r,*q1
+
+            sub   na,n1,n8
+           [n8] add   n1,1,n1
+		   [n8]  b	   oloop
+
+                sub  n,1,n1
+
+
+loop9:
+                mpy  n1,2,n2
+                ldw *js[n1],jj
+                CMPEQ jj,n2,n3
+                [n3]  B   for7
+			    mpy  jj,n,head2
+			    mpy  n1,nn,head1
+                zero n4
+loop10:
+                add   head1,n4,u
+                mpy   aa,u,head4
+                add   q,head4,qn
+                lddw  *qn,p2:p1
+
+                add   head2,n4,v
+                mpy   aa,v,head4
+                add   q,head4,pn
+                lddw  *pn,p4:p3
+
+                stdw   p2:p1,*pn
+                stdw   p4:p3,*qn
+
+                sub   nna,n4,n2
+           [n2] add   n4,2,n4
+		   [n2]  b	   loop10
+
+for7:
+                ldw *is[n1],ii
+	            CMPEQ ii,n1,n3
+                [n3]  B   for8
+		        add  ii,ii,head2
+		        mpy  n1,2,n2
+                zero n5
+loop11:
+                mpy   n5,nn,head1
+                add   head1,n2,u
+                mpy   aa,u,head4
+                add   q,head4,qn
+                lddw  *qn,p2:p1
+
+                add   head1,head2,v
+                mpy   aa,v,head4
+                add   q,head4,pn
+                lddw  *pn,p4:p3
+
+                stdw   p2:p1,*pn
+                stdw   p4:p3,*qn
+                sub   na,n5,n6
+           [n6] add   n5,1,n5
+		   [n6]  b	   loop11
+
+for8:		    sub   n1,1,n1
+                add   n1,1,n6
+		   [n6]  b	   loop9
+
+
+
+ENDFUNCTION:
+
+		 [z]  sub z,1,rret
+		 [!z] add z,1,rret
+           .return rret
+           .endproc
+

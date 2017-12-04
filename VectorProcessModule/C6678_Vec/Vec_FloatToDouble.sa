@@ -1,0 +1,32 @@
+
+
+						.global Vec_FloatToDoule
+
+Vec_FloatToDoule:		.cproc		 pInPut, pOutPut,nPointNum
+						.no_mdep  ; 指明寄存器无关性
+
+						.reg 	in1,in2,in3,in4,in5,in6
+
+
+
+
+loop1:					lddw    *pInPut++,in1:in2
+						spdp  	in1,in3:in4
+						spdp  	in2,in5:in6
+
+						stdw	in5:in6,*pOutPut++
+						stdw	in3:in4,*pOutPut++
+
+						lddw    *pInPut++,in1:in2
+						spdp  	in1,in3:in4
+						spdp  	in2,in5:in6
+						stdw	in5:in6,*pOutPut++
+						stdw	in3:in4,*pOutPut++
+
+
+
+						sub		nPointNum, 4, nPointNum
+			[nPointNum]		b		loop1
+
+
+						.endproc

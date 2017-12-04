@@ -1,0 +1,47 @@
+	        .global Vec_cplxmulmat
+
+Vec_cplxmulmat:	.cproc	pInPut1,pInPut2, rol,col, pOutPut
+				.no_mdep
+g
+				.reg	in1_re,in1_im, in2_re,in2_im,result_re,result_im
+				.reg    result4,result5,result6,result7 ,temp3,temp4
+				.reg 	num,val
+
+				zero	val
+				mpy32 	rol,col,num
+				lddw	*pInPut1, in2_im:in2_re
+				;mpy		num,2,num
+
+loop:			lddw	*pInPut2++, in1_im:in1_re
+				cmpysp	in1_im:in1_re,in2_im:in2_re, result4:result5:result6:result7
+				daddsp	result4:result5, result6:result7, temp3:temp4
+				fsubsp	val,temp3,result_re
+				mv		temp4, result_im
+				stdw	result_im:result_re,*pOutPut++
+
+				lddw	*pInPut2++, in1_im:in1_re
+				cmpysp	in1_im:in1_re,in2_im:in2_re, result4:result5:result6:result7
+				daddsp	result4:result5, result6:result7, temp3:temp4
+				fsubsp	val,temp3,result_re
+				mv		temp4, result_im
+				stdw	result_im:result_re,*pOutPut++
+
+				lddw	*pInPut2++, in1_im:in1_re
+				cmpysp	in1_im:in1_re,in2_im:in2_re, result4:result5:result6:result7
+				daddsp	result4:result5, result6:result7, temp3:temp4
+				fsubsp	val,temp3,result_re
+				mv		temp4, result_im
+				stdw	result_im:result_re,*pOutPut++
+
+				lddw	*pInPut2++, in1_im:in1_re
+				cmpysp	in1_im:in1_re,in2_im:in2_re, result4:result5:result6:result7
+				daddsp	result4:result5, result6:result7, temp3:temp4
+				fsubsp	val,temp3,result_re
+				mv		temp4, result_im
+				stdw	result_im:result_re,*pOutPut++
+
+				sub	  	num,4,num
+		[num]   b     loop
+
+				.endproc
+

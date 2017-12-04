@@ -1,0 +1,34 @@
+Insect_Detection_Radar_Platform.zip: Platform.xdc
+Platform.xdc:
+Insect_Detection_Radar_Platform.zip: Platform.xs
+Platform.xs:
+Insect_Detection_Radar_Platform.zip: config.bld
+config.bld:
+Insect_Detection_Radar_Platform.zip: package/.vers_b150
+package/.vers_b150:
+Insect_Detection_Radar_Platform.zip: package/.vers_g180
+package/.vers_g180:
+Insect_Detection_Radar_Platform.zip: package/.vers_r170
+package/.vers_r170:
+Insect_Detection_Radar_Platform.zip: package/.xdc-y44
+package/.xdc-y44:
+Insect_Detection_Radar_Platform.zip: package/Insect_Detection_Radar_Platform.ccs
+package/Insect_Detection_Radar_Platform.ccs:
+Insect_Detection_Radar_Platform.zip: package/Insect_Detection_Radar_Platform.class
+package/Insect_Detection_Radar_Platform.class:
+Insect_Detection_Radar_Platform.zip: package/Insect_Detection_Radar_Platform.java
+package/Insect_Detection_Radar_Platform.java:
+Insect_Detection_Radar_Platform.zip: package/Insect_Detection_Radar_Platform.sch
+package/Insect_Detection_Radar_Platform.sch:
+Insect_Detection_Radar_Platform.zip: package/build.cfg
+package/build.cfg:
+Insect_Detection_Radar_Platform.zip: package/package.bld.xml
+package/package.bld.xml:
+Insect_Detection_Radar_Platform.zip: package/package.defs.h
+package/package.defs.h:
+Insect_Detection_Radar_Platform.zip: package/package_Insect_Detection_Radar_Platform.c
+package/package_Insect_Detection_Radar_Platform.c:
+Insect_Detection_Radar_Platform.zip: package.bld
+package.bld:
+Insect_Detection_Radar_Platform.zip: package.xdc
+package.xdc:
