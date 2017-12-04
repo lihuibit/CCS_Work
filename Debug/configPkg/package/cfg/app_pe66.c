@@ -680,9 +680,9 @@ typedef struct ti_sysbios_knl_Mailbox_Module__ {
 /* Module__root__V */
 extern ti_sysbios_knl_Mailbox_Module__ ti_sysbios_knl_Mailbox_Module__root__V;
 
-/* <-- ti_sysbios_knl_Semaphore_Object */
-
 /* <-- ti_sysbios_knl_Queue_Object */
+
+/* <-- ti_sysbios_knl_Semaphore_Object */
 
 /* Object__ */
 typedef struct ti_sysbios_knl_Mailbox_Object__ {

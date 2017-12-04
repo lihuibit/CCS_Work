@@ -1,0 +1,9 @@
+/* THIS IS A GENERATED FILE -- DO NOT EDIT */
+/* configuro was passed a config.bld file */
+xdc.includeFile("D:/ccs_workspace_new/BD_Bistatic_SAR/Insect_Detection_Radar_Platform/config.bld");
+/* configuro was passed the target's name explicitly */
+var target  = xdc.module('ti.targets.elf.C66');
+target.ccOpts.prefix = "-g --optimize_with_debug " + target.ccOpts.prefix;
+Build.targets = [target];
+/* configuro was passed the target's rootDir explicitly */
+Build.targets[0].rootDir = 'E:/ti/ccsv5/tools/compiler/c6000_7.4.1';

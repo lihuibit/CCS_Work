@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/PDKDIR/delimiter=;
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/PDKDIR/operation=replace
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/PDKDIR/value=E\:\\ti\\pdk_C6678_1_1_2_6
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/TIDIR/delimiter=;
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/TIDIR/operation=append
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/TIDIR/value=E\:\\ti
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/append=true
+environment/project/com.ti.ccstudio.buildDefinitions.C6000.Debug.2107754468/appendContributed=true

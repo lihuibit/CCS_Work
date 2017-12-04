@@ -19,6 +19,9 @@ extern Uint32 SRIORecvCnt;
 
 //定义CMDR寄存器
 #define CMDR_REG ((CMDR_TYPEDEF*)EMIF1_BACE)
+//求结构体偏移量
+#define OFFSET(type, filed) (size_t)&(((type*)0)->filed)
+
 
 //获取指定核上变量的绝对地址
 #define Get_L2_Global_Address(addr, core_num) (0x10000000 + (core_num)*0x1000000 + (addr))

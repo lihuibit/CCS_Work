@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="GBK"?>
+<!--  This file conforms to the DTD xdc/bld/build.dtd -->
+<package name="xconfig_app" version="" producerId="undefined">
+    <units>
+    </units>
+    <sources>
+        <srcFile name="package/cfg/app_pe66.c"/>
+    </sources>
+    <configscripts>
+        <srcFile name="D:/ccs_workspace_new/BD_Bistatic_SAR/app.cfg"/>
+    </configscripts>
+    <makefiles>
+        <srcFile name="package.mak" src="package.bld"/>
+        <srcFile name="package/package.xdc.dep" src="package.xdc"/>
+        <srcFile name="package/cfg/app_pe66.mak" src="package.bld"/>
+        <srcFile name="package/cfg/app_pe66.oe66.dep" src="package/cfg/app_pe66.c"/>
+        <srcFile name="package/cfg/app_pe66.dep" src="package/cfg/app_pe66.cfg"/>
+        <srcFile name="package/cfg/app.xe66.mak" src="package.bld"/>
+        <srcFile name="package/rel/xconfig_app.tar.dep" src="package/rel/xconfig_app.xdc.inc"/>
+    </makefiles>
+    <targets>
+        <target name="ti.targets.elf.C66"
+            version="ti.targets.elf.C66{1,0,7.4,1"
+            platform="ti.platforms.simTCI6616"
+            isa="66"
+            suffix="e66"
+            rootDir="E:/ti/ccsv5/tools/compiler/c6000_7.4.1"
+            os="undefined"
+            rts="ti.targets.rts6000">
+            <model endian="little"
+                codeModel="undefined"
+                dataModel="undefined"/>
+        </target>
+    </targets>
+    <libraries>
+    </libraries>
+    <configurations>
+    <configuration name="app"
+        pname="app.pe66"
+        target="ti.targets.elf.C66"
+        platform="Insect_Detection_Radar_Platform"
+        profile="release"
+        isPartial="false"
+        xCfgScript="package/cfg/app_pe66.cfg"
+        xCfgPrefix="package/cfg/app_pe66"
+        cfgScript="D:/ccs_workspace_new/BD_Bistatic_SAR/app.cfg"
+        cfgArgs="null"
+        />
+    </configurations>
+    <executables>
+    <executable name="app"
+        pname="app.xe66"
+        target="ti.targets.elf.C66"
+        platform="Insect_Detection_Radar_Platform"
+        profile="release"
+        xCfgScript="package/cfg/app_pe66.cfg"
+        xCfgPrefix="package/cfg/app_pe66"
+        cfgScript="D:/ccs_workspace_new/BD_Bistatic_SAR/app.cfg"
+        cfgArgs="null"
+        />
+    </executables>
+    <tests>
+    <test exeName="app.xe66"
+        args=""
+        groupName="app.xe66"
+        refOutput="undefined"
+        refExitCode="0"
+        execArgs=""
+        />
+    </tests>
+    <releases relDir="package/rel/">
+    <release name="xconfig_app"
+        pname="xconfig_app.tar"
+        label="default"
+    >
+        <file name="package/package.bld.xml"/>
+        <file name="package/package.ext.xml"/>
+        <file name="package/package.rel.dot"/>
+        <file name="package/build.cfg"/>
+        <file name="package/package.xdc.inc"/>
+    </release>
+    </releases>
+    <repositories>
+    </repositories>
+</package>
